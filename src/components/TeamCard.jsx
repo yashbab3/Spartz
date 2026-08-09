@@ -1,6 +1,6 @@
 import { getLeagueById } from '../data/teams.js'
 import { useFavorites } from '../context/FavoritesContext.jsx'
-import TeamBadge from './TeamBadge.jsx'
+import TeamLogo from './TeamLogo.jsx'
 import './TeamCard.css'
 
 export default function TeamCard({ team }) {
@@ -20,7 +20,7 @@ export default function TeamCard({ team }) {
         {favorite ? '★' : '☆'}
       </button>
 
-      <TeamBadge team={team} size="lg" />
+      <TeamLogo team={team} size="lg" />
 
       <div className="team-card__info">
         <h3 className="team-card__name">{team.name}</h3>

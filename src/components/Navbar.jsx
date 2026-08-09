@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useFavorites } from '../context/FavoritesContext.jsx'
+import CoinBalance from './CoinBalance.jsx'
 import './Navbar.css'
 
 const LINKS = [
@@ -31,6 +32,8 @@ export default function Navbar() {
               </NavLink>
             ))}
           </nav>
+
+          <CoinBalance />
         </div>
       </header>
 

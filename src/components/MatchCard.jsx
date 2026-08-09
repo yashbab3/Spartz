@@ -1,11 +1,12 @@
 import { getTeamById } from '../data/teams.js'
 import { useFavorites } from '../context/FavoritesContext.jsx'
-import TeamBadge from './TeamBadge.jsx'
+import TeamLogo from './TeamLogo.jsx'
 import StatusChip from './StatusChip.jsx'
+import PredictionWidget from './PredictionWidget.jsx'
 import { formatMatchDay, formatKickoff } from '../utils/formatDate.js'
 import './MatchCard.css'
 
-export default function MatchCard({ match, variant = 'default' }) {
+export default function MatchCard({ match, variant = 'default', showPrediction = true }) {
   const home = getTeamById(match.homeTeamId)
   const away = getTeamById(match.awayTeamId)
   const { isFavorite } = useFavorites()
@@ -36,6 +37,8 @@ export default function MatchCard({ match, variant = 'default' }) {
         <span className="match-card__venue">{match.venue}</span>
         <StatusChip status={match.status} />
       </div>
+
+      {showPrediction && <PredictionWidget match={match} home={home} away={away} />}
     </article>
   )
 }
@@ -43,7 +46,7 @@ export default function MatchCard({ match, variant = 'default' }) {
 function TeamSide({ team, align, isFavorite }) {
   return (
     <div className={`match-card__side match-card__side--${align}`}>
-      <TeamBadge team={team} size="md" />
+      <TeamLogo team={team} size="md" />
       <span className={`match-card__team-name${isFavorite ? ' is-favorite' : ''}`}>{team.name}</span>
     </div>
   )

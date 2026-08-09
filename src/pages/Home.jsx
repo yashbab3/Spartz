@@ -39,7 +39,7 @@ export default function Home() {
           {spotlight && (
             <div className="hero__spotlight">
               <span className="hero__spotlight-label">Next fixture</span>
-              <MatchCard match={spotlight} />
+              <MatchCard match={spotlight} showPrediction={false} />
             </div>
           )}
         </div>
@@ -62,7 +62,7 @@ export default function Home() {
         </div>
         <div className="home__matches-grid">
           {nextFew.map((match) => (
-            <MatchCard key={match.id} match={match} variant="compact" />
+            <MatchCard key={match.id} match={match} variant="compact" showPrediction={false} />
           ))}
         </div>
       </section>

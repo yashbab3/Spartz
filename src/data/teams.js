@@ -1,7 +1,11 @@
 // ---------------------------------------------------------------------------
-// Realistic sample data for V1. No logos are pulled from external sources —
-// each team renders a generated badge (see components/TeamBadge.jsx) from the
-// colors below, so nothing here depends on copyrighted crest artwork.
+// Realistic sample data for V1. `logoUrl` is left null for every team on
+// purpose: real club crests are trademarked assets, so none are bundled
+// here. If you have a properly licensed logo source (a licensed football
+// data API, or artwork your organization has rights to use), set a team's
+// `logoUrl` to that image and TeamLogo.jsx will render it automatically in
+// place of the generated badge — sizing and layout stay identical either
+// way. See src/data/README.md for details.
 //
 // Swap this file for a real API response later (see src/data/README.md).
 // ---------------------------------------------------------------------------
@@ -23,6 +27,7 @@ export const TEAMS = [
     city: 'London',
     stadium: 'Emirates Stadium',
     founded: 1886,
+    logoUrl: null,
     colors: { primary: '#EF0107', secondary: '#023474' },
   },
   {
@@ -33,6 +38,7 @@ export const TEAMS = [
     city: 'Manchester',
     stadium: 'Etihad Stadium',
     founded: 1880,
+    logoUrl: null,
     colors: { primary: '#6CABDD', secondary: '#1C2C5B' },
   },
   {
@@ -43,6 +49,7 @@ export const TEAMS = [
     city: 'Liverpool',
     stadium: 'Anfield',
     founded: 1892,
+    logoUrl: null,
     colors: { primary: '#C8102E', secondary: '#00285E' },
   },
   {
@@ -53,6 +60,7 @@ export const TEAMS = [
     city: 'London',
     stadium: 'Stamford Bridge',
     founded: 1905,
+    logoUrl: null,
     colors: { primary: '#034694', secondary: '#DBA111' },
   },
   {
@@ -63,6 +71,7 @@ export const TEAMS = [
     city: 'Madrid',
     stadium: 'Santiago Bernabéu',
     founded: 1902,
+    logoUrl: null,
     colors: { primary: '#FEBE10', secondary: '#00529F' },
   },
   {
@@ -73,6 +82,7 @@ export const TEAMS = [
     city: 'Barcelona',
     stadium: 'Spotify Camp Nou',
     founded: 1899,
+    logoUrl: null,
     colors: { primary: '#A50044', secondary: '#004D98' },
   },
   {
@@ -83,6 +93,7 @@ export const TEAMS = [
     city: 'Madrid',
     stadium: 'Cívitas Metropolitano',
     founded: 1903,
+    logoUrl: null,
     colors: { primary: '#CE3524', secondary: '#272E61' },
   },
   {
@@ -93,6 +104,7 @@ export const TEAMS = [
     city: 'Seville',
     stadium: 'Ramón Sánchez-Pizjuán',
     founded: 1890,
+    logoUrl: null,
     colors: { primary: '#D2001C', secondary: '#F2F2F2' },
   },
   {
@@ -103,6 +115,7 @@ export const TEAMS = [
     city: 'Turin',
     stadium: 'Allianz Stadium',
     founded: 1897,
+    logoUrl: null,
     colors: { primary: '#1C1C1C', secondary: '#FFFFFF' },
   },
   {
@@ -113,6 +126,7 @@ export const TEAMS = [
     city: 'Milan',
     stadium: 'San Siro',
     founded: 1908,
+    logoUrl: null,
     colors: { primary: '#0068A8', secondary: '#000000' },
   },
   {
@@ -123,6 +137,7 @@ export const TEAMS = [
     city: 'Milan',
     stadium: 'San Siro',
     founded: 1899,
+    logoUrl: null,
     colors: { primary: '#FB090B', secondary: '#000000' },
   },
   {
@@ -133,6 +148,7 @@ export const TEAMS = [
     city: 'Naples',
     stadium: 'Diego Armando Maradona',
     founded: 1926,
+    logoUrl: null,
     colors: { primary: '#12A0D7', secondary: '#003C7D' },
   },
   {
@@ -143,6 +159,7 @@ export const TEAMS = [
     city: 'Munich',
     stadium: 'Allianz Arena',
     founded: 1900,
+    logoUrl: null,
     colors: { primary: '#DC052D', secondary: '#0066B2' },
   },
   {
@@ -153,6 +170,7 @@ export const TEAMS = [
     city: 'Dortmund',
     stadium: 'Signal Iduna Park',
     founded: 1909,
+    logoUrl: null,
     colors: { primary: '#FDE100', secondary: '#000000' },
   },
   {
@@ -163,6 +181,7 @@ export const TEAMS = [
     city: 'Leipzig',
     stadium: 'Red Bull Arena',
     founded: 2009,
+    logoUrl: null,
     colors: { primary: '#DD0741', secondary: '#001A96' },
   },
   {
@@ -173,6 +192,7 @@ export const TEAMS = [
     city: 'Leverkusen',
     stadium: 'BayArena',
     founded: 1904,
+    logoUrl: null,
     colors: { primary: '#E32221', secondary: '#000000' },
   },
   {
@@ -183,6 +203,7 @@ export const TEAMS = [
     city: 'Paris',
     stadium: 'Parc des Princes',
     founded: 1970,
+    logoUrl: null,
     colors: { primary: '#004170', secondary: '#DA291C' },
   },
   {
@@ -193,6 +214,7 @@ export const TEAMS = [
     city: 'Marseille',
     stadium: 'Orange Vélodrome',
     founded: 1899,
+    logoUrl: null,
     colors: { primary: '#2FA0DA', secondary: '#FFFFFF' },
   },
   {
@@ -203,6 +225,7 @@ export const TEAMS = [
     city: 'Lyon',
     stadium: 'Groupama Stadium',
     founded: 1950,
+    logoUrl: null,
     colors: { primary: '#00285E', secondary: '#DA0812' },
   },
   {
@@ -213,6 +236,7 @@ export const TEAMS = [
     city: 'Lille',
     stadium: 'Stade Pierre-Mauroy',
     founded: 1944,
+    logoUrl: null,
     colors: { primary: '#C60821', secondary: '#0A1E3C' },
   },
 ]

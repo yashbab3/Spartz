@@ -7,12 +7,20 @@ Vercel.
 
 - **Home** — spotlight on the next fixture, upcoming fixtures preview, popular teams.
 - **Matches** — upcoming fixtures grouped by day, filterable by competition, with
-  team names, generated badges, competition, date/kickoff time, and status
+  team logos, competition, date/kickoff time, and status
   (Scheduled / Postponed / Time TBD — no live or final scores).
 - **Teams** — browse and search all teams, filterable by league.
 - **Favorites** — star teams to follow; see your favorite teams and their
   upcoming fixtures. Saved locally in the browser (`localStorage`), no account
   needed.
+- **Predictions** — a purely virtual coin game. Every new browser starts with
+  10,000 coins (no real-world value). Pick a winner on any match card in
+  Matches/Favorites for a fixed 100-coin stake; clear a pick before kickoff
+  for a full refund. No deposits, withdrawals, purchases, or real-money
+  features anywhere.
+- Team logos: real, properly licensed crests can be dropped in per team (see
+  `src/data/README.md`); until then, a consistently sized generated badge is
+  shown so the layout never shifts.
 - Responsive: top nav on desktop, bottom tab bar on mobile.
 
 ## Getting started
@@ -54,9 +62,12 @@ src/
 ## Notes
 
 - No gambling, betting, or real-money features are included, and none are
-  planned for this app.
-- Team crests are generated from each team's colors/initials — no external
-  logo images are used, so there's no dependency on copyrighted crest
-  artwork.
+  planned for this app. The prediction game uses virtual coins only — there
+  is no way to buy, deposit, withdraw, or cash out coins for money.
+- Team crests default to a generated badge (each team's colors/initials) —
+  no external logo images are bundled, so there's no dependency on
+  copyrighted crest artwork. Real, properly licensed logos can be added per
+  team via the `logoUrl` field; see `src/data/README.md`.
 - Fixture data is realistic sample data for demonstration; it contains no
-  live or final scores by design.
+  live or final scores by design, and predictions are never auto-settled
+  against a fabricated result.

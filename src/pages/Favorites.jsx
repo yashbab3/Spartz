@@ -1,26 +1,35 @@
 import { Link } from 'react-router-dom'
 import { useMemo } from 'react'
 import { useFavorites } from '../context/FavoritesContext.jsx'
-import { TEAMS } from '../data/teams.js'
-import { MATCHES } from '../data/matches.js'
+import { usePredictions } from '../context/PredictionsContext.jsx'
+import { useTeams } from '../hooks/useTeams.js'
+import { useFixtures } from '../hooks/useFixtures.js'
+import { useSettlePredictions } from '../hooks/useSettlePredictions.js'
 import TeamCard from '../components/TeamCard.jsx'
 import MatchCard from '../components/MatchCard.jsx'
 import './Favorites.css'
 
+function dateOffset(days) {
+  const d = new Date()
+  d.setUTCDate(d.getUTCDate() + days)
+  return d.toISOString().slice(0, 10)
+}
+
 export default function Favorites() {
   const { favoriteIds } = useFavorites()
+  const { history } = usePredictions()
+  const { teams } = useTeams()
+  const { matches } = useFixtures({ dateFrom: dateOffset(-3), dateTo: dateOffset(14) })
+  useSettlePredictions(matches)
 
-  const favoriteTeams = useMemo(
-    () => TEAMS.filter((team) => favoriteIds.includes(team.id)),
-    [favoriteIds],
-  )
+  const favoriteTeams = useMemo(() => teams.filter((team) => favoriteIds.includes(team.id)), [teams, favoriteIds])
 
   const favoriteMatches = useMemo(
     () =>
-      MATCHES.filter((m) => favoriteIds.includes(m.homeTeamId) || favoriteIds.includes(m.awayTeamId)).sort(
-        (a, b) => new Date(a.kickoff) - new Date(b.kickoff),
-      ),
-    [favoriteIds],
+      matches
+        .filter((m) => favoriteIds.includes(m.homeTeam?.id) || favoriteIds.includes(m.awayTeam?.id))
+        .sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate)),
+    [matches, favoriteIds],
   )
 
   if (favoriteIds.length === 0) {
@@ -63,12 +72,11 @@ export default function Favorites() {
 
       <section>
         <div className="section-heading">
-          <h2>Their upcoming fixtures</h2>
+          <h2>Their fixtures</h2>
         </div>
         {favoriteMatches.length === 0 ? (
           <p className="favorites-page__empty">
-            None of your favorite teams have an upcoming fixture in this sample schedule
-            yet.
+            No confirmed fixtures for your favorite teams in the current schedule window.
           </p>
         ) : (
           <div className="favorites-page__matches-grid">
@@ -78,6 +86,29 @@ export default function Favorites() {
           </div>
         )}
       </section>
+
+      {history.length > 0 && (
+        <section>
+          <div className="section-heading">
+            <h2>Prediction history</h2>
+          </div>
+          <ul className="favorites-page__history">
+            {history.map((entry) => (
+              <li key={`${entry.matchId}-${entry.settledAt}`} className={`history-row${entry.won ? ' is-win' : ' is-loss'}`}>
+                <span className="history-row__fixture">
+                  {entry.homeTeam} vs {entry.awayTeam}
+                </span>
+                <span className="history-row__pick">
+                  Picked {entry.pick === 'draw' ? 'draw' : entry.pick} @ {entry.multiplier.toFixed(1)}x
+                </span>
+                <span className="history-row__result">
+                  {entry.won ? `+${entry.payout.toLocaleString()}` : `-${entry.stake.toLocaleString()}`} coins
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </div>
   )
 }

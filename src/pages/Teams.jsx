@@ -1,23 +1,33 @@
 import { useMemo, useState } from 'react'
-import { LEAGUES, TEAMS } from '../data/teams.js'
+import { useTeams } from '../hooks/useTeams.js'
 import TeamCard from '../components/TeamCard.jsx'
 import FilterChips from '../components/FilterChips.jsx'
 import './Teams.css'
 
-const FILTER_OPTIONS = [{ id: 'all', label: 'All leagues' }, ...LEAGUES.map((l) => ({ id: l.id, label: l.name }))]
-
 export default function Teams() {
+  const { teams, loading, error } = useTeams()
   const [league, setLeague] = useState('all')
   const [query, setQuery] = useState('')
 
-  const teams = useMemo(() => {
+  const leagueOptions = useMemo(() => {
+    const seen = new Map()
+    for (const t of teams) {
+      if (!seen.has(t.competitionCode)) seen.set(t.competitionCode, t.competitionName)
+    }
+    return [{ id: 'all', label: 'All leagues' }, ...Array.from(seen, ([id, label]) => ({ id, label }))]
+  }, [teams])
+
+  const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
-    return TEAMS.filter((team) => {
-      const matchesLeague = league === 'all' || team.leagueId === league
-      const matchesQuery = q.length === 0 || team.name.toLowerCase().includes(q) || team.city.toLowerCase().includes(q)
+    return teams.filter((team) => {
+      const matchesLeague = league === 'all' || team.competitionCode === league
+      const matchesQuery =
+        q.length === 0 ||
+        team.name.toLowerCase().includes(q) ||
+        (team.area?.name ?? '').toLowerCase().includes(q)
       return matchesLeague && matchesQuery
     })
-  }, [league, query])
+  }, [teams, league, query])
 
   return (
     <div className="section teams-page">
@@ -32,23 +42,42 @@ export default function Teams() {
           <input
             id="team-search"
             type="search"
-            placeholder="Search teams or cities…"
+            placeholder="Search teams or countries…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
         </label>
       </header>
 
-      <FilterChips options={FILTER_OPTIONS} active={league} onChange={setLeague} />
-
-      {teams.length === 0 ? (
-        <p className="teams-page__empty">No teams match your search.</p>
-      ) : (
-        <div className="teams-page__grid">
-          {teams.map((team) => (
-            <TeamCard key={team.id} team={team} />
+      {loading && (
+        <div className="teams-page__grid" aria-hidden="true">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="skeleton" style={{ height: 220 }} />
           ))}
         </div>
+      )}
+
+      {!loading && error && (
+        <div className="state-banner state-banner--error">
+          <strong>Team data is temporarily unavailable</strong>
+          <span>{error}</span>
+        </div>
+      )}
+
+      {!loading && !error && (
+        <>
+          <FilterChips options={leagueOptions} active={league} onChange={setLeague} />
+
+          {filtered.length === 0 ? (
+            <p className="teams-page__empty">No teams match your search.</p>
+          ) : (
+            <div className="teams-page__grid">
+              {filtered.map((team) => (
+                <TeamCard key={team.id} team={team} />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   )

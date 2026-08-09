@@ -1,4 +1,3 @@
-import { getLeagueById } from '../data/teams.js'
 import { useFavorites } from '../context/FavoritesContext.jsx'
 import TeamLogo from './TeamLogo.jsx'
 import './TeamCard.css'
@@ -6,7 +5,6 @@ import './TeamCard.css'
 export default function TeamCard({ team }) {
   const { isFavorite, toggleFavorite } = useFavorites()
   const favorite = isFavorite(team.id)
-  const league = getLeagueById(team.leagueId)
 
   return (
     <article className={`team-card${favorite ? ' is-favorite' : ''}`}>
@@ -20,23 +18,23 @@ export default function TeamCard({ team }) {
         {favorite ? '★' : '☆'}
       </button>
 
-      <TeamLogo team={team} size="lg" />
+      <TeamLogo crestUrl={team.crest} name={team.name} shortName={team.tla || team.shortName} size="lg" />
 
       <div className="team-card__info">
-        <h3 className="team-card__name">{team.name}</h3>
-        <p className="team-card__league">{league?.name}</p>
+        <h3 className="team-card__name">{team.shortName || team.name}</h3>
+        <p className="team-card__league">{team.competitionName}</p>
         <dl className="team-card__meta">
           <div>
-            <dt>City</dt>
-            <dd>{team.city}</dd>
+            <dt>Country</dt>
+            <dd>{team.area?.name ?? '—'}</dd>
           </div>
           <div>
             <dt>Stadium</dt>
-            <dd>{team.stadium}</dd>
+            <dd>{team.venue || '—'}</dd>
           </div>
           <div>
             <dt>Founded</dt>
-            <dd>{team.founded}</dd>
+            <dd>{team.founded ?? '—'}</dd>
           </div>
         </dl>
       </div>

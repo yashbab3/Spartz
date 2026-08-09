@@ -11,26 +11,49 @@
 }
 
 .prediction-widget__btn {
-  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 6px 7px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-line);
   background: var(--color-surface);
   font-family: var(--font-mono);
-  font-size: 0.76rem;
-  font-weight: 600;
-  color: var(--color-ink);
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
+.prediction-widget__btn-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.prediction-widget__btn-multiplier {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.prediction-widget__btn.is-picked .prediction-widget__btn-multiplier {
+  color: var(--color-gold);
+}
+
 .prediction-widget__btn:hover:not(:disabled) {
   border-color: var(--color-pitch);
+}
+
+.prediction-widget__btn:hover:not(:disabled) .prediction-widget__btn-label {
   color: var(--color-pitch);
 }
 
 .prediction-widget__btn.is-picked {
   background: var(--color-pitch-deep);
   border-color: var(--color-pitch-deep);
+}
+
+.prediction-widget__btn.is-picked .prediction-widget__btn-label {
   color: #ffffff;
 }
 

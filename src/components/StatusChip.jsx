@@ -1,18 +1,13 @@
-import { MATCH_STATUS } from '../data/matches.js'
+import { matchBucket, statusLabel } from '../utils/matchStatus.js'
 import './StatusChip.css'
 
-const LABELS = {
-  [MATCH_STATUS.SCHEDULED]: 'Scheduled',
-  [MATCH_STATUS.POSTPONED]: 'Postponed',
-  [MATCH_STATUS.TIME_TBD]: 'Time TBD',
-}
-
 export default function StatusChip({ status }) {
-  const label = LABELS[status] ?? 'Scheduled'
+  const bucket = matchBucket(status)
+  const modifier = bucket === 'upcoming' ? '' : ` status-chip--${bucket}`
   return (
-    <span className={`status-chip status-chip--${status}`}>
+    <span className={`status-chip${modifier}`}>
       <span className="status-chip__dot" aria-hidden="true" />
-      {label}
+      {statusLabel(status)}
     </span>
   )
 }

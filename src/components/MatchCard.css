@@ -12,7 +12,7 @@
   justify-content: space-between;
   gap: 8px;
   background: var(--color-pitch-deep);
-  color: var(--color-gold-soft);
+  color: var(--color-gold-pale);
   padding: 7px 14px;
   border-radius: 0 0 8px 0;
   width: fit-content;
@@ -93,8 +93,16 @@
   font-family: var(--font-mono);
   font-size: 1.15rem;
   font-weight: 600;
-  color: var(--color-pitch-deep);
+  color: var(--color-ink);
   letter-spacing: 0.02em;
+}
+
+.match-card__score {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: 0.03em;
 }
 
 .match-card__vs {

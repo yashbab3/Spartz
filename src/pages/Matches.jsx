@@ -1,29 +1,53 @@
 import { useMemo, useState } from 'react'
-import { MATCHES } from '../data/matches.js'
+import { useFixtures } from '../hooks/useFixtures.js'
+import { useSettlePredictions } from '../hooks/useSettlePredictions.js'
 import MatchCard from '../components/MatchCard.jsx'
 import FilterChips from '../components/FilterChips.jsx'
+import { matchBucket } from '../utils/matchStatus.js'
 import { formatMatchDay } from '../utils/formatDate.js'
 import './Matches.css'
 
-const COMPETITIONS = ['all', ...new Set(MATCHES.map((m) => m.competition))]
-const FILTER_OPTIONS = COMPETITIONS.map((c) => ({ id: c, label: c === 'all' ? 'All competitions' : c }))
+function dateOffset(days) {
+  const d = new Date()
+  d.setUTCDate(d.getUTCDate() + days)
+  return d.toISOString().slice(0, 10)
+}
 
 export default function Matches() {
+  const { matches, loading, error } = useFixtures({ dateFrom: dateOffset(-3), dateTo: dateOffset(14) })
+  useSettlePredictions(matches)
   const [competition, setCompetition] = useState('all')
 
-  const grouped = useMemo(() => {
-    const filtered = MATCHES.filter((m) => competition === 'all' || m.competition === competition).sort(
-      (a, b) => new Date(a.kickoff) - new Date(b.kickoff),
-    )
+  const competitionOptions = useMemo(() => {
+    const seen = new Map()
+    for (const m of matches) {
+      if (!seen.has(m.competitionCode)) seen.set(m.competitionCode, m.competitionName)
+    }
+    return [{ id: 'all', label: 'All competitions' }, ...Array.from(seen, ([id, label]) => ({ id, label }))]
+  }, [matches])
 
+  const filtered = useMemo(
+    () => matches.filter((m) => competition === 'all' || m.competitionCode === competition),
+    [matches, competition],
+  )
+
+  const live = filtered.filter((m) => matchBucket(m.status) === 'live')
+  const upcoming = filtered
+    .filter((m) => matchBucket(m.status) === 'upcoming')
+    .sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate))
+  const finished = filtered
+    .filter((m) => matchBucket(m.status) === 'finished')
+    .sort((a, b) => new Date(b.utcDate) - new Date(a.utcDate))
+
+  const upcomingByDay = useMemo(() => {
     const groups = new Map()
-    for (const match of filtered) {
-      const key = formatMatchDay(match.kickoff)
+    for (const match of upcoming) {
+      const key = formatMatchDay(match.utcDate)
       if (!groups.has(key)) groups.set(key, [])
       groups.get(key).push(match)
     }
     return Array.from(groups.entries())
-  }, [competition])
+  }, [upcoming])
 
   return (
     <div className="section matches-page">
@@ -31,25 +55,63 @@ export default function Matches() {
         <span className="eyebrow" style={{ color: 'var(--color-pitch)' }}>
           Fixtures
         </span>
-        <h1 className="matches-page__title">Upcoming matches</h1>
+        <h1 className="matches-page__title">Matches</h1>
       </header>
 
-      <FilterChips options={FILTER_OPTIONS} active={competition} onChange={setCompetition} />
-
-      {grouped.length === 0 && (
-        <p className="matches-page__empty">No fixtures found for this competition yet.</p>
+      {loading && (
+        <div className="matches-page__grid" aria-hidden="true">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="skeleton" style={{ height: 180 }} />
+          ))}
+        </div>
       )}
 
-      {grouped.map(([day, matches]) => (
-        <div key={day} className="matches-page__group">
-          <h2 className="matches-page__day">{day}</h2>
-          <div className="matches-page__grid">
-            {matches.map((match) => (
-              <MatchCard key={match.id} match={match} />
-            ))}
-          </div>
+      {!loading && error && (
+        <div className="state-banner state-banner--error">
+          <strong>Fixture data is temporarily unavailable</strong>
+          <span>{error}</span>
         </div>
-      ))}
+      )}
+
+      {!loading && !error && (
+        <>
+          <FilterChips options={competitionOptions} active={competition} onChange={setCompetition} />
+
+          {filtered.length === 0 && (
+            <p className="matches-page__empty">No confirmed fixtures are available for this competition right now.</p>
+          )}
+
+          {live.length > 0 && (
+            <MatchGroup title="Live now" matches={live} />
+          )}
+
+          {upcomingByDay.map(([day, dayMatches]) => (
+            <div key={day} className="matches-page__group">
+              <h2 className="matches-page__day">{day}</h2>
+              <div className="matches-page__grid">
+                {dayMatches.map((match) => (
+                  <MatchCard key={match.id} match={match} />
+                ))}
+              </div>
+            </div>
+          ))}
+
+          {finished.length > 0 && <MatchGroup title="Finished" matches={finished} />}
+        </>
+      )}
+    </div>
+  )
+}
+
+function MatchGroup({ title, matches }) {
+  return (
+    <div className="matches-page__group">
+      <h2 className="matches-page__day">{title}</h2>
+      <div className="matches-page__grid">
+        {matches.map((match) => (
+          <MatchCard key={match.id} match={match} />
+        ))}
+      </div>
     </div>
   )
 }

@@ -21,12 +21,33 @@
   background: currentColor;
 }
 
-.status-chip--postponed {
-  background: #f7e4d6;
+.status-chip--finished {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-muted);
+}
+
+.status-chip--disrupted {
+  background: rgba(226, 105, 75, 0.15);
   color: var(--color-danger);
 }
 
-.status-chip--time_tbd {
-  background: #ece9e2;
-  color: var(--color-muted);
+.status-chip--live {
+  background: rgba(239, 68, 68, 0.16);
+  color: var(--color-live);
+}
+
+.status-chip--live .status-chip__dot {
+  animation: status-live-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes status-live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.75);
+  }
 }

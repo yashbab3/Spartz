@@ -1,0 +1,157 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--color-pitch-deep);
+  height: var(--nav-height);
+}
+
+.navbar__inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar__brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--color-gold);
+  color: var(--color-pitch-deep);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar__brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.navbar__link {
+  position: relative;
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.navbar__link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.navbar__link.active {
+  color: var(--color-pitch-deep);
+  background: var(--color-gold);
+  font-weight: 600;
+}
+
+.navbar__badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--color-pitch-deep);
+  color: var(--color-gold);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar__link.active .navbar__badge {
+  background: var(--color-pitch-deep);
+  color: var(--color-gold);
+}
+
+/* Bottom tab bar: hidden on desktop, shown on phones */
+.tabbar {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .navbar__links {
+    display: none;
+  }
+
+  .tabbar {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    height: var(--tabbar-height);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-line);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .tabbar__link {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: var(--color-muted);
+  }
+
+  .tabbar__link.active {
+    color: var(--color-pitch);
+  }
+
+  .tabbar__icon {
+    position: relative;
+  }
+
+  .tabbar__label {
+    font-size: 0.66rem;
+    font-weight: 600;
+  }
+
+  .tabbar__badge {
+    position: absolute;
+    top: -4px;
+    right: -8px;
+    min-width: 15px;
+    height: 15px;
+    padding: 0 3px;
+    border-radius: 999px;
+    background: var(--color-gold);
+    color: var(--color-pitch-deep);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

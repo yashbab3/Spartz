@@ -1,0 +1,84 @@
+.favorites-page {
+  padding-top: 32px;
+  padding-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.favorites-page__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 1.5rem + 1.4vw, 2.5rem);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.favorites-page__teams-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.favorites-page__matches-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.favorites-page__empty {
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+
+.favorites-empty {
+  max-width: 420px;
+  margin: 60px auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.favorites-empty__star {
+  font-size: 2.4rem;
+  color: var(--color-gold);
+}
+
+.favorites-empty h1 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  text-transform: uppercase;
+}
+
+.favorites-empty p {
+  color: var(--color-muted);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.favorites-empty .btn {
+  margin-top: 8px;
+  background: var(--color-pitch-deep);
+  color: #fff;
+}
+
+.favorites-empty .btn:hover {
+  background: var(--color-pitch);
+}
+
+@media (max-width: 900px) {
+  .favorites-page__teams-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .favorites-page__teams-grid {
+    grid-template-columns: 1fr;
+  }
+  .favorites-page__matches-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,32 @@
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--color-pitch-soft);
+  color: var(--color-pitch);
+  white-space: nowrap;
+}
+
+.status-chip__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-chip--postponed {
+  background: #f7e4d6;
+  color: var(--color-danger);
+}
+
+.status-chip--time_tbd {
+  background: #ece9e2;
+  color: var(--color-muted);
+}

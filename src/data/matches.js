@@ -1,0 +1,162 @@
+// ---------------------------------------------------------------------------
+// Realistic sample fixture data for V1. No live scores are included by
+// design — status is limited to pre-match states. Swap this file for a real
+// fixtures API later (see src/data/README.md).
+// ---------------------------------------------------------------------------
+
+export const MATCH_STATUS = {
+  SCHEDULED: 'scheduled',
+  POSTPONED: 'postponed',
+  TIME_TBD: 'time_tbd',
+}
+
+export const MATCHES = [
+  {
+    id: 'm1',
+    competition: 'Premier League',
+    homeTeamId: 'ars',
+    awayTeamId: 'liv',
+    kickoff: '2026-08-16T15:00:00',
+    venue: 'Emirates Stadium',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm2',
+    competition: 'Premier League',
+    homeTeamId: 'mci',
+    awayTeamId: 'che',
+    kickoff: '2026-08-16T17:30:00',
+    venue: 'Etihad Stadium',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm3',
+    competition: 'La Liga',
+    homeTeamId: 'rma',
+    awayTeamId: 'atm',
+    kickoff: '2026-08-17T20:00:00',
+    venue: 'Santiago Bernabéu',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm4',
+    competition: 'La Liga',
+    homeTeamId: 'fcb',
+    awayTeamId: 'sev',
+    kickoff: '2026-08-18T19:00:00',
+    venue: 'Spotify Camp Nou',
+    status: MATCH_STATUS.POSTPONED,
+  },
+  {
+    id: 'm5',
+    competition: 'Serie A',
+    homeTeamId: 'juv',
+    awayTeamId: 'nap',
+    kickoff: '2026-08-19T18:45:00',
+    venue: 'Allianz Stadium',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm6',
+    competition: 'Serie A',
+    homeTeamId: 'int',
+    awayTeamId: 'mil',
+    kickoff: '2026-08-20T20:45:00',
+    venue: 'San Siro',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm7',
+    competition: 'Bundesliga',
+    homeTeamId: 'bay',
+    awayTeamId: 'bvb',
+    kickoff: '2026-08-21T18:30:00',
+    venue: 'Allianz Arena',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm8',
+    competition: 'Bundesliga',
+    homeTeamId: 'b04',
+    awayTeamId: 'rbl',
+    kickoff: '2026-08-22T15:30:00',
+    venue: 'BayArena',
+    status: MATCH_STATUS.TIME_TBD,
+  },
+  {
+    id: 'm9',
+    competition: 'Ligue 1',
+    homeTeamId: 'psg',
+    awayTeamId: 'om',
+    kickoff: '2026-08-23T20:45:00',
+    venue: 'Parc des Princes',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm10',
+    competition: 'Ligue 1',
+    homeTeamId: 'lil',
+    awayTeamId: 'ol',
+    kickoff: '2026-08-24T17:00:00',
+    venue: 'Stade Pierre-Mauroy',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm11',
+    competition: 'UEFA Champions League',
+    homeTeamId: 'liv',
+    awayTeamId: 'bay',
+    kickoff: '2026-08-27T20:00:00',
+    venue: 'Anfield',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm12',
+    competition: 'UEFA Champions League',
+    homeTeamId: 'rma',
+    awayTeamId: 'psg',
+    kickoff: '2026-08-27T20:00:00',
+    venue: 'Santiago Bernabéu',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm13',
+    competition: 'Premier League',
+    homeTeamId: 'che',
+    awayTeamId: 'ars',
+    kickoff: '2026-08-30T15:00:00',
+    venue: 'Stamford Bridge',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm14',
+    competition: 'Premier League',
+    homeTeamId: 'liv',
+    awayTeamId: 'mci',
+    kickoff: '2026-08-30T17:30:00',
+    venue: 'Anfield',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm15',
+    competition: 'Serie A',
+    homeTeamId: 'nap',
+    awayTeamId: 'int',
+    kickoff: '2026-09-02T20:45:00',
+    venue: 'Diego Armando Maradona',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+  {
+    id: 'm16',
+    competition: 'La Liga',
+    homeTeamId: 'atm',
+    awayTeamId: 'fcb',
+    kickoff: '2026-09-13T21:00:00',
+    venue: 'Cívitas Metropolitano',
+    status: MATCH_STATUS.SCHEDULED,
+  },
+]
+
+export function getMatchesForTeam(teamId) {
+  return MATCHES.filter((match) => match.homeTeamId === teamId || match.awayTeamId === teamId)
+}

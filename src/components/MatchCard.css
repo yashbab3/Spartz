@@ -1,0 +1,142 @@
+.match-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.match-card__tab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--color-pitch-deep);
+  color: var(--color-gold-soft);
+  padding: 7px 14px;
+  border-radius: 0 0 8px 0;
+  width: fit-content;
+  min-width: 40%;
+}
+
+.match-card__competition {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.match-card__fav-mark {
+  color: var(--color-gold);
+  font-size: 0.8rem;
+}
+
+.match-card__body {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 16px 14px;
+}
+
+.match-card__side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.match-card__side--right {
+  flex-direction: row;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.match-card__side--left {
+  flex-direction: row;
+  text-align: left;
+}
+
+.match-card__team-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.match-card__team-name.is-favorite {
+  color: var(--color-pitch);
+}
+
+.match-card__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 12px;
+  border-left: 1px dashed var(--color-line);
+  border-right: 1px dashed var(--color-line);
+  min-width: 84px;
+}
+
+.match-card__day {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.match-card__clock {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-pitch-deep);
+  letter-spacing: 0.02em;
+}
+
+.match-card__vs {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  color: var(--color-gold);
+  letter-spacing: 0.1em;
+}
+
+.match-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 16px 14px;
+  border-top: 1px solid var(--color-line);
+  padding-top: 12px;
+  margin-top: 2px;
+}
+
+.match-card__venue {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Compact variant used in the home spotlight / previews */
+.match-card--compact .match-card__body {
+  padding: 14px 14px 10px;
+}
+
+.match-card--compact .match-card__team-name {
+  font-size: 0.85rem;
+}
+
+@media (max-width: 480px) {
+  .match-card__team-name {
+    font-size: 0.82rem;
+  }
+  .match-card__center {
+    min-width: 68px;
+  }
+}

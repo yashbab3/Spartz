@@ -1,13 +1,8 @@
 import { matchBucket, statusLabel } from '../utils/matchStatus.js'
-import './StatusChip.css'
+import StatusPill from './StatusPill.jsx'
 
+// Football-specific status chip — unchanged behavior, now implemented on
+// top of the shared StatusPill used by the other sports.
 export default function StatusChip({ status }) {
-  const bucket = matchBucket(status)
-  const modifier = bucket === 'upcoming' ? '' : ` status-chip--${bucket}`
-  return (
-    <span className={`status-chip${modifier}`}>
-      <span className="status-chip__dot" aria-hidden="true" />
-      {statusLabel(status)}
-    </span>
-  )
+  return <StatusPill bucket={matchBucket(status)} label={statusLabel(status)} />
 }

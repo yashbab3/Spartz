@@ -27,6 +27,21 @@ fixtures API (football-data.org) server-side.
 - **Kuwait local time (UTC+3)** — every kickoff time is displayed in
   `Asia/Kuwait`, regardless of the viewer's device timezone.
 
+- **Multi-sport Matches page** — a sport switcher (Football / Basketball /
+  Tennis / Formula 1) at the top of Matches. Football's behavior is
+  completely unchanged from before; the other three sports are new:
+  - **Basketball** (API-Basketball) — live/upcoming/finished games, team
+    logos, scores, league name, Kuwait kickoff time.
+  - **Tennis** (Live Tennis API) — live and upcoming matches, player names,
+    tournament, status, live set/game score where the API provides it.
+    Finished-match results need a paid tier upstream, so that section shows
+    an honest note instead of guessing at results.
+  - **Formula 1** (API-Formula-1) — the season calendar grouped by Grand
+    Prix weekend, with every practice/qualifying/race session and its
+    Kuwait-time kickoff and status.
+  Every sport shows a clear empty/error state instead of invented fixtures
+  if its API has nothing to report or is misconfigured.
+
 There is **no fake/sample data** anywhere in this app. If the fixtures API
 is unreachable or misconfigured, the UI shows a clear "temporarily
 unavailable" message instead of falling back to invented matches.
@@ -46,6 +61,11 @@ api/
   fixtures.js            GET /api/fixtures?competition=PL&dateFrom=...&dateTo=...
   teams.js               GET /api/teams?competition=PL
   standings.js           GET /api/standings?competition=PL
+  _apiSports.js           Shared proxy helper for Basketball + F1 — reads APISPORTS_KEY
+  basketball-games.js     GET /api/basketball-games?date=YYYY-MM-DD
+  f1-races.js              GET /api/f1-races?season=YYYY
+  _tennisApi.js            Shared proxy helper for tennis — reads TENNIS_API_KEY
+  tennis-matches.js        GET /api/tennis-matches?status=live|scheduled
 ```
 
 The `/api/*` files are Vercel serverless functions. They hold the
@@ -83,8 +103,11 @@ npm run preview
 2. Import it at [vercel.com/new](https://vercel.com/new) — it auto-detects
    Vite for the frontend and the `/api` folder for the serverless functions.
 3. In **Project Settings → Environment Variables**, add:
-   - `FOOTBALL_DATA_API_KEY` — your key from football-data.org. **Do not**
-     prefix it with `VITE_` — it must stay server-side only.
+   - `FOOTBALL_DATA_API_KEY` — your key from football-data.org.
+   - `APISPORTS_KEY` — your key from api-sports.io (covers Basketball and
+     Formula 1).
+   - `TENNIS_API_KEY` — your free key from livetennisapi.com.
+   None of these should be prefixed `VITE_` — they must stay server-side only.
 4. Redeploy. `vercel.json` already excludes `/api/*` from the SPA rewrite,
    so both the app routes and the API routes work correctly.
 
@@ -98,7 +121,7 @@ git init                                   # only if this folder isn't already a
 git remote add origin <your-Spartz-repo-URL>   # skip if the remote already exists
 git checkout main                          # or: git checkout -b main
 git add -A
-git commit -m "Live fixtures, real logos, dark mode, virtual prediction multipliers"
+git commit -m "Add basketball, tennis, and Formula 1 sections with live data"
 git push origin main
 ```
 
@@ -117,4 +140,16 @@ push` as usual — don't re-run `git init`.
   missing or fails to load.
 - Prediction multipliers are this app's own simple estimate from live
   standings, clearly labeled as such in the UI — not sourced from any
-  odds/gambling data provider.
+  odds/gambling data provider. Predictions are only offered for football
+  right now; basketball/tennis/F1 are display-only in this version.
+- The Tennis integration was built against Live Tennis API's documented
+  free-tier endpoints and response conventions, but I couldn't test it live
+  end-to-end (no network access in the build sandbox) — `TennisMatchCard`
+  reads several plausible field names defensively, but it's worth
+  double-checking against a real response from `docs.livetennisapi.com`
+  once you have a key, and adjusting the field names in
+  `TennisMatchCard.jsx` if anything doesn't line up.
+- Basketball and F1 use the same API-Sports response conventions as several
+  other well-documented sports in that family, so field names there are on
+  firmer footing, but the same advice applies: verify one real response
+  before relying on it in production.
